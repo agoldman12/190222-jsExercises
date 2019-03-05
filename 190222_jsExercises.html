@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>02/22/2019 JS exercises</title>
+
+    <script>
+//------------------------------------------------------------------------------------------------------------------------------
+
+    /*
+    https://www.codewars.com/kata/plus-1-array
+    Given an array of integers of any length, return an array that has 1 added to the value represented by the array.
+
+    the array can't be empty
+    only non-negative, single digit integers are allowed
+    Return nil (or your language's equivalent) for invalid inputs. 
+
+    
+    Examples
+    For example the array [2, 3, 9] equals 239, adding one would return the array [2, 4, 0].
+
+    [4, 3, 2, 5] would return [4, 3, 2, 6]
+    */
+
+   //Aaron's solution - passed Most tests on codewars.com
+   'use strict'
+    function upArray(arr){
+     //check for invalid input (there is a negative number or a 2 digit number in the input array)
+     for(let i = 0; i < arr.length; i++){
+        if(arr[i] >= 10 || arr[i] < 0){
+            return null;
+        }
+     }
+
+      arr = Number(arr.join(""));
+      let newNum = arr + 1;
+      return String(newNum).split("").map(function(el){
+        return Number(el);
+      });
+    }
+    console.log(upArray([9, 2, 2, 3, 3, 7, 2, 0, 3, 6, 8, 5, 4, 7, 7, 5, 8, 0, 7]));
+
+    /*
+    My thinking:
+
+    Add 1 to the value represented by the array:
+    1. convert input array to string
+    2. convert string to number
+    3. add 1 to the number
+    4. convert number back to string
+    5. convert string to an array
+    6. use map to create a new array and change the data type of each element from a string to a number.
+
+    Handle invalid input:
+    1. loop through input array
+    2. check to see if any of the digits are > 10 or < 0.
+    3. If so, return null 
+
+    ** Having trouble with this ex. [9, 2, 2, 3, 3, 7, 2, 0, 3, 6, 8, 5, 4, 7, 7, 5, 8, 0, 7]
+    I know JS can't precisely read numbers greater than 19 digits (2^53). I read some information about using plugins, there was one called 'bigInt', but I would like to solve this without a plugin if possible. **
+    */
+   
+//------------------------------------------------------------------------------------------------------------------------------
+
+        /*
+        https://www.codewars.com/kata/585d7d5adb20cf33cb000235/train/javascript
+        There is an array with some numbers. All numbers are equal except for one. Try to find it!
+
+        findUniq([ 1, 1, 1, 2, 1, 1 ]) === 2
+        findUniq([ 0, 0, 0.55, 0, 0 ]) === 0.55
+        It’s guaranteed that array contains more than 3 numbers.
+
+        The tests contain some very huge arrays, so think about performance.
+
+        This is the first kata in series:
+
+        Find the unique number (this kata)
+        Find the unique string
+        Find The Unique
+        */
+
+        //Aaron's solution
+        function findUniq(arr) {
+          let obj = {};
+
+          arr.forEach(function(el){
+            obj[el] ? obj[el]++ : obj[el] = 1;
+          })
+          for( var el in obj){
+            if(obj[el] === 1){
+              return Number(el);
+            }
+          }
+
+        }
+        console.log(findUniq([ 0, 0, 0.55, 0, 0]));
+
+        //alternate solution
+        function findUniq2(arr) {
+          arr.sort((a,b)=>a-b);
+            return arr[0]==arr[1]?arr.pop():arr[0]
+        }
+        console.log(findUniq2([ 2, 2, 4, 2, 2 ]));
+
+        /*
+        My Thinking:
+        1. loop through array and put items into an object in order to count how many of each number are in the array.
+        2. loop through the object and look for the element whose value is equal to 1.
+        3. return that element because that is the unique number.
+        */
+//------------------------------------------------------------------------------------------------------------------------------
+        /*
+        https://www.codewars.com/kata/find-the-unique-string/train/javascript
+        Same concept as above, only using strings instead of numbers.
+        */
+
+        function findUniq3(arr) {
+            //still working on this one. Not sure what the logic might be.
+        }
+        console.log(findUniq3([  'Aa', 'aaa', 'aaaaa', 'BbBb', 'Aaaa', 'AaAaAa', 'a' ]));
+//------------------------------------------------------------------------------------------------------------------------------
+        /*
+        https://www.codewars.com/kata/545cedaa9943f7fe7b000048/train/javascript
+        A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
+
+        Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+        */
+
+        //Aaron's solution
+        function isPangram(str){
+           let pangram = str.toLowerCase().split("").filter(el => el.match(/[a-z]/)).join("");
+           let result = [];
+           for(let i = 0; i < pangram.length; i++){
+                if(result.indexOf(pangram[i]) === -1){
+                    result.push(pangram[i]);
+                }
+            }
+            result.sort();
+            return result.length == 26 ? true : false
+          
+        }
+        console.log(isPangram("The quick brown fox jumps over the lazy dog."));
+
+        //alternate solution
+        function isPangram(string){
+            const array = string.replace(/[^a-z]+/gi, '').toLowerCase().split('');
+            return (new Set(array)).size === 26;
+        }
+        
+
+        /*
+        My thinking:
+        1. change str input into an array
+        2. filter the array so that it only has letters. No numbers, spaces or punctuation allowed
+        3. set up 'result' array
+        4. loop through var pangram and check to see if the current letter of 'pangram' is in the result array
+        5. if not, push it there. If so, do nothing
+        6. if the length of the result array is 26 return true else return false
+        */
+        
+//------------------------------------------------------------------------------------------------------------------------------
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
