@@ -24,18 +24,27 @@
    //Aaron's solution - passed Most tests on codewars.com
    'use strict'
     function upArray(arr){
-     //check for invalid input (there is a negative number or a 2 digit number in the input array)
+     //if there is a 2 digit number or a negative number, return null
      for(let i = 0; i < arr.length; i++){
         if(arr[i] >= 10 || arr[i] < 0){
             return null;
         }
      }
-
-      arr = Number(arr.join(""));
-      let newNum = arr + 1;
-      return String(newNum).split("").map(function(el){
-        return Number(el);
-      });
+     //if the array is empty, return null
+      if(arr.length === 0){
+        return null;
+     }
+    
+      let rev = arr.slice().reverse();
+      for( let i = 0; i < rev.length; i++){
+          if(rev[i] < 9){
+             rev[i]++;
+             break;
+          }else{
+            rev[i] = 0;
+          }
+      }
+      return rev.reverse();
     }
     console.log(upArray([9, 2, 2, 3, 3, 7, 2, 0, 3, 6, 8, 5, 4, 7, 7, 5, 8, 0, 7]));
 
